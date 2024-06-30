@@ -77,6 +77,11 @@ include(macros/external-macro-qhull)
 include(macros/external-macro-boost)
 include(macros/external-macro-pcl)
 
+include(macros/external-macro-python)
+include(macros/external-macro-numpy)
+include(macros/external-macro-libusb)
+include(macros/external-macro-genicam)
+
 
 # macro to find programs on the host OS
 macro( find_host_program )

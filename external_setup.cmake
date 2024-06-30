@@ -49,6 +49,19 @@ set(CMAKE_PREFIX_PATH
 message(STATUS "External Dependecies Found:")
 message(STATUS "--------------------------- \n")
 
+#fetch_python()
+#compile_python()
+
+fetch_numpy()
+compile_numpy()
+
+#fetch_libusb()
+#compile_libusb()
+
+#fetch_genicam()
+#compile_genicam()
+
+#[[
 find_package(FFMPEG ${EXTERNAL_VERSION_FFMPEG} COMPONENTS ${EXTERNAL_FFMPEG_FIND_COMPONENTS} QUIET)
 if(NOT FFMPEG_FOUND)
     message(STATUS "FFmpeg v${EXTERNAL_VERSION_FFMPEG}: no")
@@ -172,5 +185,6 @@ if(NOT PCL_FOUND OR EXTERNAL_REBUILD_PCL)
 else(PCL_FOUND)
     message(STATUS "PCL v${EXTERNAL_VERSION_PCL}: yes")
 endif(NOT PCL_FOUND OR EXTERNAL_REBUILD_PCL)
+]]
 
 message(STATUS "\n")
