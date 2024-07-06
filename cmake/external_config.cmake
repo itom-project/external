@@ -37,7 +37,7 @@ set(EXTERNAL_BUILD_TYPE ${CMAKE_BUILD_TYPE})
 
 set(EXTERNAL_PATCHES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/patches)
 
-find_package(PythonInterp REQUIRED)
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
 find_package(Git REQUIRED)
 
 set(EXTERNAL_DEPENDENCY_OPENCV opencv-fetch)

@@ -49,19 +49,24 @@ set(CMAKE_PREFIX_PATH
 message(STATUS "External Dependecies Found:")
 message(STATUS "--------------------------- \n")
 
-#fetch_python()
-#compile_python()
+#not win
+if(NOT WIN32)
+    fetch_python()
+    compile_python()
+endif(NOT WIN32)
 
+#[[
 fetch_numpy()
 compile_numpy()
 
-#fetch_libusb()
-#compile_libusb()
+fetch_libusb()
+compile_libusb()
 
-#fetch_genicam()
-#compile_genicam()
+fetch_genicam()
+compile_genicam()
+]]
 
-#[[
+if(NOT WIN32)
 find_package(FFMPEG ${EXTERNAL_VERSION_FFMPEG} COMPONENTS ${EXTERNAL_FFMPEG_FIND_COMPONENTS} QUIET)
 if(NOT FFMPEG_FOUND)
     message(STATUS "FFmpeg v${EXTERNAL_VERSION_FFMPEG}: no")
@@ -84,7 +89,6 @@ else(NOT GSTREAMER_FOUND)
     message(STATUS "GStreamer v${EXTERNAL_VERSION_GSTREAMER}: yes")
 endif(NOT GSTREAMER_FOUND)
 
-
 find_package(OpenCV ${EXTERNAL_VERSION_OPENCV} QUIET)
 if(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
     message(STATUS "OpenCV v${EXTERNAL_VERSION_OPENCV}: no")
@@ -102,6 +106,7 @@ if(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
 else(NOT OpenCV_FOUND)
     message(STATUS "OpenCV v${EXTERNAL_VERSION_OPENCV}: yes")
 endif(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
+endif(NOT WIN32)
 
 
 find_package(Qt6 ${EXTERNAL_VERSION_QT} COMPONENTS ${EXTERNAL_QT_FIND_COMPONENTS} QUIET)
@@ -118,7 +123,7 @@ else(NOT Qt6_FOUND)
     qt_standard_project_setup()
 endif(NOT Qt6_FOUND)
 
-
+#[[
 find_package(Eigen3 ${EXTERNAL_VERSION_EIGEN} NO_MODULE QUIET)
 if(NOT TARGET Eigen3::Eigen)
     message(STATUS "Eigen v${EXTERNAL_VERSION_EIGEN}: no")
