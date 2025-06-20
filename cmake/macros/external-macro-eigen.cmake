@@ -14,7 +14,7 @@
 # General Public Licence for more details.
 #
 # You should have received a copy of the GNU Library General Public License
-# along with multipoint. If not, see <http://www.gnu.org/licenses/>.
+# along with itom. If not, see <http://www.gnu.org/licenses/>.
 
 #
 # Eigen fetch
@@ -30,9 +30,6 @@ macro(fetch_eigen)
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND cmake -E echo "Skipping install step."
-    #INSTALL_COMMAND ${CMAKE_COMMAND}
-    #  -E copy_directory "${EXTERNAL_SOURCE_PREFIX}/eigen/Eigen" "${EXTERNAL_INSTALL_PREFIX}/eigen-host/Eigen" && ${CMAKE_COMMAND}
-    #  -E copy_directory "${EXTERNAL_SOURCE_PREFIX}/eigen/unsupported" "${EXTERNAL_INSTALL_PREFIX}/eigen-host/unsupported"
     CMAKE_ARGS
       -DEIGEN_MPL2_ONLY
   )
@@ -53,7 +50,7 @@ macro(compile_eigen)
       -DCMAKE_INSTALL_PREFIX:PATH=${EXTERNAL_INSTALL_PREFIX}/${proj}
     CONFIGURE_COMMAND
     BUILD_COMMAND
-    INSTALL_COMMAND make install
+    INSTALL_COMMAND cmake --install .
   )
 
   force_build(${proj})

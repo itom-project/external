@@ -14,7 +14,7 @@
 # General Public Licence for more details.
 #
 # You should have received a copy of the GNU Library General Public License
-# along with multipoint. If not, see <http://www.gnu.org/licenses/>.
+# along with itom. If not, see <http://www.gnu.org/licenses/>.
 
 list(APPEND CMAKE_MODULE_PATH
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -49,24 +49,23 @@ set(CMAKE_PREFIX_PATH
 message(STATUS "External Dependecies Found:")
 message(STATUS "--------------------------- \n")
 
-#not win
-if(NOT WIN32)
-    fetch_python()
-    compile_python()
-endif(NOT WIN32)
+#fetch_python()
+#compile_python()
 
 #[[
 fetch_numpy()
 compile_numpy()
-
-fetch_libusb()
-compile_libusb()
-
-fetch_genicam()
-compile_genicam()
 ]]
 
-if(NOT WIN32)
+#fetch_libusb()
+#compile_libusb()
+
+#fetch_genicam()
+#compile_genicam()
+
+message(STATUS "CMAKE_SYSTEM_INCLUDE_PATH: ${CMAKE_SYSTEM_INCLUDE_PATH}")
+message(STATUS "CMAKE_INCLUDE_PATH: ${CMAKE_INCLUDE_PATH}")
+
 find_package(FFMPEG ${EXTERNAL_VERSION_FFMPEG} COMPONENTS ${EXTERNAL_FFMPEG_FIND_COMPONENTS} QUIET)
 if(NOT FFMPEG_FOUND)
     message(STATUS "FFmpeg v${EXTERNAL_VERSION_FFMPEG}: no")
@@ -78,6 +77,7 @@ else(NOT FFMPEG_FOUND)
     message(STATUS "FFmpeg v${EXTERNAL_VERSION_FFMPEG}: yes")
 endif(NOT FFMPEG_FOUND)
 
+#[[
 find_package(GStreamer ${EXTERNAL_VERSION_GSTREAMER} QUIET)
 if(NOT GSTREAMER_FOUND)
     message(STATUS "GStreamer v${EXTERNAL_VERSION_GSTREAMER}: no")
@@ -88,6 +88,7 @@ if(NOT GSTREAMER_FOUND)
 else(NOT GSTREAMER_FOUND)
     message(STATUS "GStreamer v${EXTERNAL_VERSION_GSTREAMER}: yes")
 endif(NOT GSTREAMER_FOUND)
+
 
 find_package(OpenCV ${EXTERNAL_VERSION_OPENCV} QUIET)
 if(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
@@ -103,12 +104,12 @@ if(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
         message(SEND_ERROR "GStreamer not found: Can not compile OpenCV due to missing dependency.")
     endif(NOT GSTREAMER_FOUND AND NOT EXTERNAL_REBUILD_OPENCV)
 
-else(NOT OpenCV_FOUND)
+else(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
     message(STATUS "OpenCV v${EXTERNAL_VERSION_OPENCV}: yes")
 endif(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
-endif(NOT WIN32)
+]]
 
-
+#[[
 find_package(Qt6 ${EXTERNAL_VERSION_QT} COMPONENTS ${EXTERNAL_QT_FIND_COMPONENTS} QUIET)
 if(NOT Qt6_FOUND)
     message(STATUS "Qt v${EXTERNAL_VERSION_QT}: no")
@@ -123,7 +124,6 @@ else(NOT Qt6_FOUND)
     qt_standard_project_setup()
 endif(NOT Qt6_FOUND)
 
-#[[
 find_package(Eigen3 ${EXTERNAL_VERSION_EIGEN} NO_MODULE QUIET)
 if(NOT TARGET Eigen3::Eigen)
     message(STATUS "Eigen v${EXTERNAL_VERSION_EIGEN}: no")
@@ -137,7 +137,6 @@ else(NOT TARGET Eigen3::Eigen)
     message(STATUS "Eigen v${EXTERNAL_VERSION_EIGEN}: yes")
 endif(NOT TARGET Eigen3::Eigen)
 
-
 find_package(Boost ${EXTERNAL_VERSION_BOOST} COMPONENTS ${EXTERNAL_BOOST_FIND_COMPONENTS} QUIET)
 if(NOT BOOST_FOUND)
     message(STATUS "Boost v${EXTERNAL_VERSION_BOOST}: no")
@@ -150,7 +149,6 @@ if(NOT BOOST_FOUND)
 else(NOT BOOST_FOUND)
     message(STATUS "Boost v${EXTERNAL_VERSION_BOOST}: yes")
 endif(NOT BOOST_FOUND)
-
 
 find_package(FLANN ${EXTERNAL_VERSION_FLANN} QUIET)
 if(NOT FLANN_FOUND)
@@ -169,17 +167,16 @@ find_package(VTK QUIET)
 if(NOT VTK_FOUND OR EXTERNAL_REBUILD_VTK)
     message(STATUS "VTK v${EXTERNAL_VERSION_VTK}: no")
     set(EXTERNAL_FLAG_BUILD_COMPLETE FALSE)
-    set(EXTERNAL_DEPENDEDCY_VTK ${EXTERNAL_DEPENDEDCY_VTK} qhull-host pcap-host)
-    set(EXTERNAL_DEPENDEDCY_PCL ${EXTERNAL_DEPENDEDCY_PCL} qhull-host pcap-host vtk-host)
+    set(EXTERNAL_DEPENDEDCY_VTK ${EXTERNAL_DEPENDEDCY_VTK} qhull-host)
+    set(EXTERNAL_DEPENDEDCY_PCL ${EXTERNAL_DEPENDEDCY_PCL} qhull-host vtk-host)
     set(EXTERNAL_REBUILD_PCL ON)
     fetch_qhull()
-    fetch_pcap()
     compile_qhull()
-    compile_pcap()
     fetch_vtk()
     compile_vtk()
 else(NOT VTK_FOUND)
     message(STATUS "VTK v${EXTERNAL_VERSION_VTK}: yes")
+
 endif(NOT VTK_FOUND OR EXTERNAL_REBUILD_VTK)
 
 find_package(PCL QUIET)

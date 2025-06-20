@@ -14,7 +14,7 @@
 # General Public Licence for more details.
 #
 # You should have received a copy of the GNU Library General Public License
-# along with multipoint. If not, see <http://www.gnu.org/licenses/>.
+# along with itom. If not, see <http://www.gnu.org/licenses/>.
 
 #https://www.emva.org/standards-technology/genicam/genicam-downloads-archive%20/
 
@@ -38,19 +38,48 @@ endmacro()
 macro(compile_genicam)
   set(proj genicam-host)
 
-  #[[
-  set(GENICAM_NAME_TGZ GenICam_V3_4_1_1-)
+
+  #windows AMD64, IA64, ARM64, EM64T, X86
+  #Appple x86_64, arm64, and powerpc
+  #LINUX alpha,arc,arm,aarch64_be (arm64),aarch64 (arm64),armv8b (arm64 compat),armv8l (arm64 compat),blackfin,c6x,cris,frv,h8300,hexagon,ia64,m32r,m68k,
+  # metag,microblaze,mips (native or compat),mips64 (mips),mn10300,nios2,openrisc,parisc (native or compat),parisc64 (parisc),ppc (powerpc native or compat),ppc64 (powerpc),
+  # ppcle (powerpc native or compat), ppc64le (powerpc), s390 (s390x compat), s390x, score, sh, sh64 (sh), sparc (native or compat), sparc64 (sparc), tile, unicore32
+  # i386 (x86), i686 (x86 compat), x86_64 (x64), xtensa, armv7l (RaspberyPi4 arm32)
+
+  #if patch number 0 then exclude from naming convention
+  set(GENICAM_NAME_TGZ GenICam_V3_4_2-)
 
     # let the preprocessor know about the system name
+    # https://stackoverflow.com/questions/70475665/what-are-the-possible-values-of-cmake-system-processor
+    # https://stackoverflow.com/questions/45125516/possible-values-for-uname-m/45125525#45125525
+    # https://wiki.debian.org/ArchitectureSpecificsMemo
   if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(GENICAM_OS Linux)
-  endif()
-  if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-    set(GENICAM_OS Mac)
-  if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    set(GENICAM_OS Win)
-  endif()
+    
+  set(GENICAM_PROC_LIST_64 "aarch64_be aarch64 ia64 mips64 parisc64 ppc64 ppc64le s390x sh64 sparc64 x86_64")
+  set(GENICAM_PROC_LIST_32 "alpha arc arm armv8b armv8l blackfin c6x cris frv h8300 hexagon m32r m68k metag microblaze mips mn10300 nios2 openrisc parisc ppc ppcle score sh sparc tile unicore32 i386 i686 xtensa armv7l")
 
+    string(REGEX MATCH ${CMAKE_HOST_SYSTEM_PROCESSOR} GENICAM_PROC_MATCH ${GENICAM_PROC_LIST})
+    message(STATUS "GENICAM_PROC_MATCH: ${GENICAM_PROC_MATCH}")
+  elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set(GENICAM_OS Mac)
+    set(GENICAM_PROC_LIST_64 "x86_64, arm64")
+    set(GENICAM_PROC_LIST_32 "powerpc")
+  
+  elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set(GENICAM_OS Win)
+    set(GENICAM_PROC_LIST_64 "AMD64 IA64 ARM64 EM64T")
+    set(GENICAM_PROC_LIST_32 "X86")
+    string(REGEX MATCH ${CMAKE_HOST_SYSTEM_PROCESSOR} GENICAM_PROC_MATCH ${GENICAM_PROC_LIST})
+    message(STATUS "GENICAM_PROC_MATCH: ${GENICAM_PROC_MATCH}")
+
+  endif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+
+  
+
+  
+
+  #[[
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(GENICAM_BITSIZE 64)
   elseif(NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -70,13 +99,7 @@ macro(compile_genicam)
   endif(NOT APPLE)
   ]]
 
-  #https://stackoverflow.com/questions/70475665/what-are-the-possible-values-of-cmake-system-processor
-  #windows AMD64, IA64, ARM64, EM64T, X86
-  #Appple x86_64, arm64, and powerpc
-  #LINUX alpha,arc,arm,aarch64_be (arm64),aarch64 (arm64),armv8b (arm64 compat),armv8l (arm64 compat),blackfin,c6x,cris,frv,h8300,hexagon,ia64,m32r,m68k,
-  # metag,microblaze,mips (native or compat),mips64 (mips),mn10300,nios2,openrisc,parisc (native or compat),parisc64 (parisc),ppc (powerpc native or compat),ppc64 (powerpc),
-  # ppcle (powerpc native or compat), ppc64le (powerpc), s390 (s390x compat), s390x, score, sh, sh64 (sh), sparc (native or compat), sparc64 (sparc), tile, unicore32
-  # i386 (x86), i686 (x86 compat), x86_64 (x64), xtensa, armv7l (RaspberyPi4 arm32)
+
 
   set(GENICAM_RUNTIME_TGZ GenICam_V3_4_1_1-Linux64_x64_gcc48-Runtime.tgz)
   set(GENICAM_SDK_TGZ GenICam_V3_4_1_1-Linux64_x64_gcc48-SDK.tgz)

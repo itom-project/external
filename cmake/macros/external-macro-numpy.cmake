@@ -14,7 +14,7 @@
 # General Public Licence for more details.
 #
 # You should have received a copy of the GNU Library General Public License
-# along with multipoint. If not, see <http://www.gnu.org/licenses/>.
+# along with itom. If not, see <http://www.gnu.org/licenses/>.
 
 # Resources and Instructions:
 # https://gitlab.kitware.com/paraview/paraview/-/blob/66db4465f412175033bf419892ff1dc942244aa5/SuperBuild/External_NUMPY.cmake

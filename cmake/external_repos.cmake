@@ -24,7 +24,8 @@ set(EXTERNAL_REPO_PYTHON https://github.com/python/cpython.git)
 set(EXTERNAL_REPO_NUMPY https://github.com/numpy/numpy.git)
 set(EXTERNAL_REPO_QT https://github.com/qt/qt5.git)
 set(EXTERNAL_REPO_OPENCV https://github.com/opencv/opencv.git)
-set(EXTERNAL_REPO_FFMPEG https://github.com/FFmpeg/FFmpeg.git)
+set(EXTERNAL_REPO_FFMPEG_UNIX https://github.com/FFmpeg/FFmpeg.git)
+set(EXTERNAL_REPO_FFMPEG_WIN https://github.com/m-ab-s/media-autobuild_suite)
 set(EXTERNAL_REPO_GSTREAMER https://github.com/GStreamer/gstreamer.git)
 
 set(EXTERNAL_REPO_GLEW https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0.zip)
@@ -35,8 +36,7 @@ set(EXTERNAL_REPO_QHULL https://github.com/qhull/qhull.git)
 set(EXTERNAL_REPO_BOOST https://github.com/boostorg/boost.git)
 set(EXTERNAL_REPO_VTK https://gitlab.kitware.com/vtk/vtk.git)
 set(EXTERNAL_REPO_PCL https://github.com/PointCloudLibrary/pcl.git)
-
-#set(EXTERNAL_REPO_LIBUSB https://github.com/ev-mp/libusb.git)
 set(EXTERNAL_REPO_LIBUSB https://github.com/libusb/libusb-cmake.git)
-set(EXTERNAL_REPO_GENICAM https://www.emva.org/wp-content/uploads/GenICam_Package_2023.07a.zip)
+# Release Cycle of GeniCam probably related to Debian: So probably Month 04 and yearly Releases 3->2023, 4->2024 
+set(EXTERNAL_REPO_GENICAM https://www.emva.org/wp-content/uploads/GenICam_Package_2024.04.zip)
 

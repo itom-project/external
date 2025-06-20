@@ -14,7 +14,7 @@
 # General Public Licence for more details.
 #
 # You should have received a copy of the GNU Library General Public License
-# along with multipoint. If not, see <http://www.gnu.org/licenses/>.
+# along with itom. If not, see <http://www.gnu.org/licenses/>.
 
 #
 # Boost fetch

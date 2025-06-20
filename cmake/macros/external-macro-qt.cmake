@@ -48,8 +48,8 @@ macro(compile_qt)
     DOWNLOAD_COMMAND ""
     DEPENDS qt-fetch
     CONFIGURE_COMMAND ${EXTERNAL_SOURCE_PREFIX}/qt/configure
-      -xcb
-      -xcb-xlib
+      #-xcb 
+      #-xcb-xlib
       #-bundled-xcb-input
       -submodules ${EXTERNAL_QT_MODULES_JOINED}
       -prefix ${EXTERNAL_INSTALL_PREFIX}/qt-host

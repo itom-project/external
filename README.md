@@ -9,7 +9,7 @@ In order to learn more about **itom**, see the official homepage [itom.bitbucket
 This repository is the includes the superbuild instructions to add the external depencies for the **itom-project**,
 which are currently comprising:
 
-* FFMepg
+* FFMpeg
 * GStreamer
 * OpenCV
 * Qt

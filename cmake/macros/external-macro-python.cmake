@@ -40,6 +40,24 @@ endmacro()
 # python compile
 #
 macro(compile_python)
+
+  # Python Cofigure Command
+  set( Python_Cofigure_Command )
+  set( Python_Build_Command )
+  set( Python_Install_Command )
+  if( UNIX )
+    set( Python_Configure_Command ${EXTERNAL_SOURCE_PREFIX}/python/configure --prefix ${EXTERNAL_INSTALL_PREFIX}/python-host --enable-optimizations)
+    set( Python_Build_Command cmake --build --parallel 8)
+    set( Python_Install_Command cmake --install . )
+  else()
+    if( WIN32 )
+      set( Python_Configure_Command ${EXTERNAL_SOURCE_PREFIX}/python/PCbuild/build.bat )
+      set( Python_Build_Command cmake -E echo "Skipping build step." )
+      set( Python_Install_Command cmake -E echo "Skipping install step." )
+    endif()
+  endif()
+
+  
   set(proj python-host)
   ExternalProject_Add(
     ${proj}
@@ -47,11 +65,9 @@ macro(compile_python)
     BINARY_DIR ${EXTERNAL_BUILD_PREFIX}/python-host
     DOWNLOAD_COMMAND ""
     DEPENDS python-fetch
-    CONFIGURE_COMMAND ${EXTERNAL_SOURCE_PREFIX}/python/configure
-      --prefix ${EXTERNAL_INSTALL_PREFIX}/python-host
-      --enable-optimizations
-    BUILD_COMMAND make -j8
-    INSTALL_COMMAND make install
+    CONFIGURE_COMMAND ${Python_Configure_Command}
+    BUILD_COMMAND ${Python_Build_Command}
+    INSTALL_COMMAND ${Python_Install_Command}
   )
   add_to_env(${proj}/lib)
   force_build(${proj})
