@@ -1,14 +1,14 @@
-# - mulitpoint software - 
+# - itom software - 
 # URL: http://www.uni-stuttgart.de/ito
 # Copyright (C) 2023, Institut fuer Technische Optik (ITO),
 # Universitaet Stuttgart, Germany
 #
-# mulitpoint is free software; you can redistribute it and/or modify it
+# itom is free software; you can redistribute it and/or modify it
 # under the terms of the GNU Library General Public Licence as published by
 # the Free Software Foundation; either version 2 of the Licence, or (at
 # your option) any later version.
 #
-# mulitpoint is distributed in the hope that it will be useful, but
+# itom is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library
 # General Public Licence for more details.
@@ -71,43 +71,36 @@ if(NOT FFMPEG_FOUND)
     message(STATUS "FFmpeg v${EXTERNAL_VERSION_FFMPEG}: no")
     set(EXTERNAL_FLAG_BUILD_COMPLETE FALSE)
     set(EXTERNAL_REBUILD_OPENCV ON)
+    set(EXTERNAL_DEPENDENCY_OPENCV ${EXTERNAL_DEPENDENCY_OPENCV} ffmpeg-host)
     fetch_ffmpeg()
     compile_ffmpeg()
 else(NOT FFMPEG_FOUND)
     message(STATUS "FFmpeg v${EXTERNAL_VERSION_FFMPEG}: yes")
 endif(NOT FFMPEG_FOUND)
 
-#[[
 find_package(GStreamer ${EXTERNAL_VERSION_GSTREAMER} QUIET)
 if(NOT GSTREAMER_FOUND)
     message(STATUS "GStreamer v${EXTERNAL_VERSION_GSTREAMER}: no")
     set(EXTERNAL_FLAG_BUILD_COMPLETE FALSE)
     set(EXTERNAL_REBUILD_OPENCV ON)
+    set(EXTERNAL_DEPENDENCY_OPENCV ${EXTERNAL_DEPENDENCY_OPENCV} gstreamer-host)
     fetch_gstreamer()
     compile_gstreamer()
 else(NOT GSTREAMER_FOUND)
     message(STATUS "GStreamer v${EXTERNAL_VERSION_GSTREAMER}: yes")
 endif(NOT GSTREAMER_FOUND)
 
-
 find_package(OpenCV ${EXTERNAL_VERSION_OPENCV} QUIET)
 if(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
     message(STATUS "OpenCV v${EXTERNAL_VERSION_OPENCV}: no")
     set(EXTERNAL_FLAG_BUILD_COMPLETE FALSE)
+
     fetch_opencv()
     compile_opencv()
-
-    if(NOT FFMPEG_FOUND AND NOT EXTERNAL_REBUILD_OPENCV)
-        message(SEND_ERROR "FFMpeg not found: Can not compile OpenCV due to missing dependency.")
-    endif(NOT FFMPEG_FOUND AND NOT EXTERNAL_REBUILD_OPENCV)
-    if(NOT GSTREAMER_FOUND AND NOT EXTERNAL_REBUILD_OPENCV)
-        message(SEND_ERROR "GStreamer not found: Can not compile OpenCV due to missing dependency.")
-    endif(NOT GSTREAMER_FOUND AND NOT EXTERNAL_REBUILD_OPENCV)
 
 else(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
     message(STATUS "OpenCV v${EXTERNAL_VERSION_OPENCV}: yes")
 endif(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
-]]
 
 #[[
 find_package(Qt6 ${EXTERNAL_VERSION_QT} COMPONENTS ${EXTERNAL_QT_FIND_COMPONENTS} QUIET)

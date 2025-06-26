@@ -29,8 +29,8 @@ Clone this repositoriy and initialize the submodules and update them:
 
 or use the main project to complete an All-In-Build, comprsing **xternals**, **itom**core, **plugins** and **designerplugins** submodules:
 
-    git clone --recursive --remote git@github.com:itom-project/mulitpoint.git
-    cd mulitpoint
+    git clone --recursive --remote git@github.com:itom-project/itom.git
+    cd itom
     git submodule foreach --recursive git checkout master
 
 ### Dependencies ###
@@ -59,8 +59,8 @@ https://askubuntu.com/questions/343770/gdb-symbol-lookup-error
 ### Building ###
 to build the project follow the steps listed below:
 
-    git clone --recursive --remote git@github.com:itom-project/mulitpoint.git
-    cd mulitpoint
+    git clone --recursive --remote git@github.com:itom-project/itom.git
+    cd itom
     git submodule foreach --recursive git checkout master
     
 ### Recognition ###
