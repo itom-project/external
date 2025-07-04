@@ -18,6 +18,6 @@
 # You should have received a copy of the GNU Library General Public License
 # along with itom. If not, see <http://www.gnu.org/licenses/>.
 
-set(EXTERNAL_SOURCE_PREFIX ${base}/src)
+set(EXTERNAL_SOURCE_PREFIX ${base}/Source)
 set(EXTERNAL_BUILD_PREFIX ${base}/Build)
 set(EXTERNAL_INSTALL_PREFIX ${base}/Install)

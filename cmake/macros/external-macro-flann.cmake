@@ -35,21 +35,76 @@ endmacro()
 #
 # FLANN compile
 #
+
+#winget install pkg-config
+
+#[[
+build flann using msys
+
+pacman -Syu  # update system (do this twice as prompted)
+pacman -S git base-devel \
+  mingw-w64-x86_64-toolchain \
+  mingw-w64-x86_64-cmake \
+  mingw-w64-x86_64-pkg-config \
+  mingw-w64-x86_64-lz4
+
+git clone https://github.com/flann-lib/flann.git
+cd flann
+mkdir build
+cd build
+
+cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/your/custom/path
+
+make -j$(nproc)
+
+make install
+
+]]
+
+set(test ${CMAKE_GENERATOR_PLATFORM})
+set(test2 ${MSVC_VERSION})
+set(test3 ${CMAKE_GENERATOR})
+
+
 macro(compile_flann)
   set(proj flann-host)
-  ExternalProject_Add(
+
+  if( WIN32 )
+    set( FLANN_MSYS2_SHELL "C:/msys64/msys2_shell.cmd")  # Or bash.exe from Git
+    set( FLANN_MSYS2_Configure ${EXTERNAL_SOURCE_PREFIX}/flann -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_PREFIX}/${proj} 
+        -DBUILD_SHARED_LIBS:BOOL=ON
+        -DBUILD_EXAMPLES:BOOL=OFF
+        -DBUILD_PYTHON_BINDINGS:BOOL=OFF
+        -DBUILD_MATLAB_BINDINGS:BOOL=OFF)
+    set( FLANN_MSYS2_Make make -j install)
+
+    ExternalProject_Add(
     ${proj}
     SOURCE_DIR ${EXTERNAL_SOURCE_PREFIX}/flann
     DOWNLOAD_COMMAND ""
     DEPENDS flann-fetch
-    CMAKE_ARGS
-      -DCMAKE_INSTALL_PREFIX:PATH=${EXTERNAL_INSTALL_PREFIX}/${proj}
-      -DCMAKE_BUILD_TYPE:STRING=${EXTERNAL_BUILD_TYPE}
-      -DBUILD_SHARED_LIBS:BOOL=ON
-      -DBUILD_EXAMPLES:BOOL=OFF
-      -DBUILD_PYTHON_BINDINGS:BOOL=OFF
-      -DBUILD_MATLAB_BINDINGS:BOOL=OFF
-  )
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E echo "Skipping configure step."
+    BUILD_COMMAND  ${FLANN_MSYS2_SHELL} -mingw64 -full-path -c "cd '${EXTERNAL_BUILD_PREFIX}/${proj}' && cmake ${EXTERNAL_SOURCE_PREFIX}/flann -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_PREFIX}/${proj} -DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_EXAMPLES:BOOL=OFF -DBUILD_PYTHON_BINDINGS:BOOL=OFF -DBUILD_MATLAB_BINDINGS:BOOL=OFF && make -j install && exit; exec /bin/sh"
+    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Skipping install step."
+    )
+  
+  else( WIN32 )
+
+    ExternalProject_Add(
+      ${proj}
+      SOURCE_DIR ${EXTERNAL_SOURCE_PREFIX}/flann
+      DOWNLOAD_COMMAND ""
+      DEPENDS flann-fetch
+      CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX:PATH=${EXTERNAL_INSTALL_PREFIX}/${proj}
+        -DCMAKE_BUILD_TYPE:STRING=${EXTERNAL_BUILD_TYPE}
+        -DBUILD_SHARED_LIBS:BOOL=ON
+        -DBUILD_EXAMPLES:BOOL=OFF
+        -DBUILD_PYTHON_BINDINGS:BOOL=OFF
+        -DBUILD_MATLAB_BINDINGS:BOOL=OFF
+    )
+
+  endif( WIN32 )
 
   add_to_env(${proj}/lib)
   force_build(${proj})

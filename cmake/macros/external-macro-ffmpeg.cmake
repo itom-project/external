@@ -93,7 +93,8 @@ macro(compile_ffmpeg)
         --disable-stripping)
     endif(NOT (EXISTS ${EXTERNAL_SOURCE_PREFIX}/ffmpeg/config.h))
     
-    ExternalProject_Add(ffmpeg
+    ExternalProject_Add(
+      ${proj}
       SOURCE_DIR ${EXTERNAL_SOURCE_PREFIX}/ffmpeg
       DOWNLOAD_COMMAND ""
       DEPENDS ffmpeg-fetch
@@ -105,7 +106,7 @@ macro(compile_ffmpeg)
 
   add_to_env(${proj}/lib)
   ExternalProject_Add_StepTargets(ffmpeg install)
-  set(EXTERNAL_DEPENDENCY_OPENCV ${EXTERNAL_DEPENDENCY_OPENCV} ffmpeg-install)      
+  set(EXTERNAL_DEPENDENCY_OPENCV ${EXTERNAL_DEPENDENCY_OPENCV} ffmpeg-install)
   
   endif( WIN32 )
 

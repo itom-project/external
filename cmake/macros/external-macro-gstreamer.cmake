@@ -111,7 +111,8 @@ macro(compile_gstreamer)
     -Dtools=disabled)
   endif( WIN32 )
 
-  ExternalProject_Add(gstreamer
+  ExternalProject_Add(
+    ${proj}
     SOURCE_DIR ${EXTERNAL_SOURCE_PREFIX}/gstreamer
     DOWNLOAD_COMMAND ""
     DEPENDS gstreamer-fetch

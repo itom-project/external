@@ -49,10 +49,12 @@ set(CMAKE_PREFIX_PATH
 message(STATUS "External Dependecies Found:")
 message(STATUS "--------------------------- \n")
 
-#fetch_python()
-#compile_python()
 
 #[[
+fetch_python()
+compile_python()
+
+
 fetch_numpy()
 compile_numpy()
 ]]
@@ -66,6 +68,7 @@ compile_numpy()
 message(STATUS "CMAKE_SYSTEM_INCLUDE_PATH: ${CMAKE_SYSTEM_INCLUDE_PATH}")
 message(STATUS "CMAKE_INCLUDE_PATH: ${CMAKE_INCLUDE_PATH}")
 
+#[[
 find_package(FFMPEG ${EXTERNAL_VERSION_FFMPEG} COMPONENTS ${EXTERNAL_FFMPEG_FIND_COMPONENTS} QUIET)
 if(NOT FFMPEG_FOUND)
     message(STATUS "FFmpeg v${EXTERNAL_VERSION_FFMPEG}: no")
@@ -102,7 +105,7 @@ else(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
     message(STATUS "OpenCV v${EXTERNAL_VERSION_OPENCV}: yes")
 endif(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
 
-#[[
+
 find_package(Qt6 ${EXTERNAL_VERSION_QT} COMPONENTS ${EXTERNAL_QT_FIND_COMPONENTS} QUIET)
 if(NOT Qt6_FOUND)
     message(STATUS "Qt v${EXTERNAL_VERSION_QT}: no")
@@ -142,6 +145,7 @@ if(NOT BOOST_FOUND)
 else(NOT BOOST_FOUND)
     message(STATUS "Boost v${EXTERNAL_VERSION_BOOST}: yes")
 endif(NOT BOOST_FOUND)
+]]
 
 find_package(FLANN ${EXTERNAL_VERSION_FLANN} QUIET)
 if(NOT FLANN_FOUND)
@@ -156,6 +160,7 @@ else(NOT FLANN_FOUND)
     message(STATUS "Flann v${EXTERNAL_VERSION_FLANN}: yes")
 endif(NOT FLANN_FOUND)
 
+#[[
 find_package(VTK QUIET)
 if(NOT VTK_FOUND OR EXTERNAL_REBUILD_VTK)
     message(STATUS "VTK v${EXTERNAL_VERSION_VTK}: no")
