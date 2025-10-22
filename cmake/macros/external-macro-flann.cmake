@@ -84,10 +84,14 @@ macro(compile_flann)
     DOWNLOAD_COMMAND ""
     DEPENDS flann-fetch
     CONFIGURE_COMMAND ${CMAKE_COMMAND} -E echo "Skipping configure step."
-    BUILD_COMMAND  ${FLANN_MSYS2_SHELL} -mingw64 -full-path -c "cd '${EXTERNAL_BUILD_PREFIX}/${proj}' && cmake ${EXTERNAL_SOURCE_PREFIX}/flann -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_PREFIX}/${proj} -DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_EXAMPLES:BOOL=OFF -DBUILD_PYTHON_BINDINGS:BOOL=OFF -DBUILD_MATLAB_BINDINGS:BOOL=OFF && make -j install && exit; exec /bin/sh"
+    #BUILD_COMMAND ${FLANN_MSYS2_SHELL} -mingw64 -no-start -defterm -c "echo Hello && exec bash"
+    BUILD_COMMAND  ${FLANN_MSYS2_SHELL} -mingw64 -c "cd '${EXTERNAL_BUILD_PREFIX}/${proj}' && echo ${EXTERNAL_SOURCE_PREFIX}/flann -G Unix Makefiles -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_PREFIX}/${proj} -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_EXAMPLES:BOOL=OFF -DBUILD_PYTHON_BINDINGS:BOOL=OFF -DBUILD_MATLAB_BINDINGS:BOOL=OFF && exec bash"
     INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Skipping install step."
     )
-  
+    #&& make -j install; exec /bin/sh 
+    #&& exec bash"
+    #-full-path
+    # && exit; exec /bin/sh"
   else( WIN32 )
 
     ExternalProject_Add(
