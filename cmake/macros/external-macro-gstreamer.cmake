@@ -121,11 +121,12 @@ macro(compile_gstreamer)
     BUILD_COMMAND
       ${Meson_EXECUTABLE} compile -C ${EXTERNAL_BUILD_PREFIX}/${proj}
     INSTALL_COMMAND
-      ${Meson_EXECUTABLE} install -C ${EXTERNAL_BUILD_PREFIX}/${proj} --destdir ${EXTERNAL_INSTALL_PREFIX}/${proj})
+      ${Meson_EXECUTABLE} install -C ${EXTERNAL_BUILD_PREFIX}/${proj} --destdir ${EXTERNAL_INSTALL_PREFIX}/${proj}
+    )
 
-  add_to_env(${proj}/lib/x86_64-linux-gnu)
-  ExternalProject_Add_StepTargets(gstreamer install)
-  set(EXTERNAL_DEPENDENCY_OPENCV ${EXTERNAL_DEPENDENCY_OPENCV} gstreamer-install)
+  #add_to_env(${proj}/lib/x86_64-linux-gnu)
+  #ExternalProject_Add_StepTargets(gstreamer install)
+  #set(EXTERNAL_DEPENDENCY_OPENCV ${EXTERNAL_DEPENDENCY_OPENCV} gstreamer-install)
 endmacro()
 
 # ${GSTREAMER_ARGS} --prefix=${EXTERNAL_INSTALL_PREFIX}/${proj} ${EXTERNAL_BUILD_PREFIX}/${proj} ${EXTERNAL_SOURCE_PREFIX}/gstreamer

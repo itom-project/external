@@ -75,10 +75,6 @@ macro(compile_genicam)
 
   endif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 
-  
-
-  
-
   #[[
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(GENICAM_BITSIZE 64)
@@ -98,8 +94,6 @@ macro(compile_genicam)
     set(GENICAM_ARCH ${OSX_ARCHITECTURES})
   endif(NOT APPLE)
   ]]
-
-
 
   set(GENICAM_RUNTIME_TGZ GenICam_V3_4_1_1-Linux64_x64_gcc48-Runtime.tgz)
   set(GENICAM_SDK_TGZ GenICam_V3_4_1_1-Linux64_x64_gcc48-SDK.tgz)

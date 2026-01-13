@@ -50,18 +50,26 @@ message(STATUS "External Dependecies Found:")
 message(STATUS "--------------------------- \n")
 
 
+#builds on windows but incorrect build and install folder
+#problems with the directive Python_Configure_Command ${EXTERNAL_SOURCE_PREFIX}/python/PCbuild/build.bat --outdir ${EXTERNAL_INSTALL_PREFIX}/python-host -e
+#check linux
+#fetch_python()
+#compile_python()
+
 #[[
-fetch_python()
-compile_python()
-
-
+Todo: remove python dependencies and install them later on via pip.
+See existing Itom scripts for reference.
 fetch_numpy()
-compile_numpy()
+compile_numpy() 
 ]]
 
+#builds on windows but no install files // check linux
 #fetch_libusb()
 #compile_libusb()
 
+#builds on windows but not to build folder, no installation
+# take a look a processor and system architecture for reference
+# problem is missing windows definition
 #fetch_genicam()
 #compile_genicam()
 
@@ -69,6 +77,7 @@ message(STATUS "CMAKE_SYSTEM_INCLUDE_PATH: ${CMAKE_SYSTEM_INCLUDE_PATH}")
 message(STATUS "CMAKE_INCLUDE_PATH: ${CMAKE_INCLUDE_PATH}")
 
 #[[
+#builds on windows no problem // check linux
 find_package(FFMPEG ${EXTERNAL_VERSION_FFMPEG} COMPONENTS ${EXTERNAL_FFMPEG_FIND_COMPONENTS} QUIET)
 if(NOT FFMPEG_FOUND)
     message(STATUS "FFmpeg v${EXTERNAL_VERSION_FFMPEG}: no")
@@ -80,9 +89,13 @@ if(NOT FFMPEG_FOUND)
 else(NOT FFMPEG_FOUND)
     message(STATUS "FFmpeg v${EXTERNAL_VERSION_FFMPEG}: yes")
 endif(NOT FFMPEG_FOUND)
+]]
 
+#[[
+#does not build, // check linux
 find_package(GStreamer ${EXTERNAL_VERSION_GSTREAMER} QUIET)
 if(NOT GSTREAMER_FOUND)
+
     message(STATUS "GStreamer v${EXTERNAL_VERSION_GSTREAMER}: no")
     set(EXTERNAL_FLAG_BUILD_COMPLETE FALSE)
     set(EXTERNAL_REBUILD_OPENCV ON)
@@ -92,7 +105,10 @@ if(NOT GSTREAMER_FOUND)
 else(NOT GSTREAMER_FOUND)
     message(STATUS "GStreamer v${EXTERNAL_VERSION_GSTREAMER}: yes")
 endif(NOT GSTREAMER_FOUND)
+]]
 
+#does not build, problem with ffmpeg // check linux
+#[[
 find_package(OpenCV ${EXTERNAL_VERSION_OPENCV} QUIET)
 if(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
     message(STATUS "OpenCV v${EXTERNAL_VERSION_OPENCV}: no")
@@ -104,8 +120,10 @@ if(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
 else(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
     message(STATUS "OpenCV v${EXTERNAL_VERSION_OPENCV}: yes")
 endif(NOT OpenCV_FOUND OR EXTERNAL_REBUILD_OPENCV)
+]]
 
-
+#builds on windows no problem // check linux
+#[[
 find_package(Qt6 ${EXTERNAL_VERSION_QT} COMPONENTS ${EXTERNAL_QT_FIND_COMPONENTS} QUIET)
 if(NOT Qt6_FOUND)
     message(STATUS "Qt v${EXTERNAL_VERSION_QT}: no")
@@ -119,7 +137,9 @@ else(NOT Qt6_FOUND)
     message(STATUS "Qt v${EXTERNAL_VERSION_QT}: yes")
     qt_standard_project_setup()
 endif(NOT Qt6_FOUND)
+]]
 
+#builds on windows no problem // check linux
 find_package(Eigen3 ${EXTERNAL_VERSION_EIGEN} NO_MODULE QUIET)
 if(NOT TARGET Eigen3::Eigen)
     message(STATUS "Eigen v${EXTERNAL_VERSION_EIGEN}: no")
@@ -133,7 +153,8 @@ else(NOT TARGET Eigen3::Eigen)
     message(STATUS "Eigen v${EXTERNAL_VERSION_EIGEN}: yes")
 endif(NOT TARGET Eigen3::Eigen)
 
-find_package(Boost ${EXTERNAL_VERSION_BOOST} COMPONENTS ${EXTERNAL_BOOST_FIND_COMPONENTS} QUIET)
+#does not build (Additional Problem with FindBoost on latest CMakeVersion)// check linux
+#find_package(Boost ${EXTERNAL_VERSION_BOOST} COMPONENTS ${EXTERNAL_BOOST_FIND_COMPONENTS} QUIET)
 if(NOT BOOST_FOUND)
     message(STATUS "Boost v${EXTERNAL_VERSION_BOOST}: no")
     set(EXTERNAL_FLAG_BUILD_COMPLETE FALSE)
@@ -145,8 +166,8 @@ if(NOT BOOST_FOUND)
 else(NOT BOOST_FOUND)
     message(STATUS "Boost v${EXTERNAL_VERSION_BOOST}: yes")
 endif(NOT BOOST_FOUND)
-]]
 
+#[[
 find_package(FLANN ${EXTERNAL_VERSION_FLANN} QUIET)
 if(NOT FLANN_FOUND)
     message(STATUS "Flann v${EXTERNAL_VERSION_FLANN}: no")
@@ -159,6 +180,7 @@ if(NOT FLANN_FOUND)
 else(NOT FLANN_FOUND)
     message(STATUS "Flann v${EXTERNAL_VERSION_FLANN}: yes")
 endif(NOT FLANN_FOUND)
+]]
 
 #[[
 find_package(VTK QUIET)
